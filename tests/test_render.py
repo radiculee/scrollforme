@@ -31,6 +31,12 @@ def test_entry_with_title_and_url_becomes_headline():
 	assert "<dt>score</dt>" in html
 
 
+def test_headline_entries_are_posts_keyed_by_url():
+	html = _render({"posts": [{"title": "New model", "url": "https://r.com/p", "score": 5}]})
+	assert '<article class="post" data-url="https://r.com/p">' in html
+	assert html.index("<dt>score</dt>") < html.index("</article>")
+
+
 def test_split_headline_leaves_entries_without_a_link_alone():
 	entry = {"title": "T", "url": "ftp://x"}
 	assert split_headline(entry) == ("", "", entry)

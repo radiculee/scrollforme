@@ -9,11 +9,13 @@ modules_dir = "modules"
 [browser]
 # A dedicated Chrome profile. Log in to each site once with `scrollforme login`.
 profile_dir = "profile"
+# Windows: "C:/Program Files/Google/Chrome/Application/chrome.exe"
 chrome_binary = "google-chrome"
 headless = false
 
 [mcp]
 # How to start stealth-browser-mcp (https://github.com/vibheksoni/stealth-browser-mcp).
+# Windows venvs keep Python at .venv/Scripts/python.exe instead of .venv/bin/python.
 command = "~/.local/src/stealth-browser-mcp/.venv/bin/python"
 args = ["~/.local/src/stealth-browser-mcp/src/server.py"]
 
@@ -27,9 +29,5 @@ max_budget_usd = 1.0    # per site visit
 # says, in your own words, what you use that site for. Its browse() gets it verbatim.
 [[sources]]
 module = "reddit.com"
-description = """I follow r/LocalLLaMA and r/selfhosted for new open models and self-hosting
-tools. I want the day's notable posts, not memes or drama."""
-
-[[sources]]
-module = "instagram.com"
-description = "I only use Instagram to see what my friends posted. Show new posts from people I follow."
+description = """My home feed: the top of what the subreddits I follow are posting right now,
+so I can catch up without scrolling."""

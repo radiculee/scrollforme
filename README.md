@@ -50,7 +50,12 @@ cp scrollforme.example.toml scrollforme.toml   # then edit sources and descripti
 uv run scrollforme login                       # opens Chrome on the profile; log in, then close it
 uv run scrollforme run                         # writes output/<timestamp>/digest.html
 uv run scrollforme render output/<run>/digest.json   # re-render after template changes
+uv run scrollforme import-reddit feed.json           # digest from a saved old.reddit.com/.json, no agent
 ```
+
+**Current target.** The example config reads your Reddit home feed (old.reddit.com, first 25 posts). If the live agent can't run, `import-reddit` builds the same page from `https://old.reddit.com/.json?limit=25` saved from a logged-in browser.
+
+**Windows.** In `scrollforme.toml`, set `chrome_binary = "C:/Program Files/Google/Chrome/Application/chrome.exe"` and point `[mcp] command` at `.venv/Scripts/python.exe` inside the stealth-browser-mcp checkout. Use `uv sync --frozen` and `uv run --frozen`, so a newer uv doesn't rewrite `uv.lock`.
 
 **Authentication.** The Agent SDK uses `ANTHROPIC_API_KEY` if it is set. Otherwise it uses your Claude Code login.
 

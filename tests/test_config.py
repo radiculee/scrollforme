@@ -12,7 +12,7 @@ EXAMPLE_CONFIG = REPO_ROOT / "scrollforme.example.toml"
 
 def test_example_config_loads():
 	settings = load_settings(EXAMPLE_CONFIG)
-	assert [source.module for source in settings.sources] == ["reddit.com", "instagram.com"]
+	assert [source.module for source in settings.sources] == ["reddit.com"]
 	assert settings.modules_dir == REPO_ROOT / "modules"
 	assert settings.browser.profile_dir.is_absolute()
 	assert "~" not in settings.mcp.command

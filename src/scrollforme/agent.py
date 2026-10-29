@@ -128,7 +128,7 @@ def build_prompt(task: SiteTask, settings: Settings) -> str:
 	browser = settings.browser
 	guidance = f"\nNotes about this site: {task.guidance}" if task.guidance else ""
 	return (
-		f"Start a browser with spawn_browser(user_data_dir={str(browser.profile_dir)!r}, "
+		f"Start a browser with spawn_browser(user_data_dir={browser.profile_dir.as_posix()!r}, "
 		f"headless={browser.headless}). It is already logged in; do not try to log in.\n"
 		f"Start at {task.start_url} and stay on {task.domain}.\n"
 		f"What the user uses {task.domain} for: {task.description}{guidance}"

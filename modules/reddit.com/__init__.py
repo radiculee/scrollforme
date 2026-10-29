@@ -4,12 +4,15 @@ from scrollforme.agent import browse_site
 
 __all__ = ["browse"]
 
-_START_URL = "https://www.reddit.com/"
+# old.reddit lists 25 posts per page with no infinite scroll, so one page is the whole visit.
+_START_URL = "https://old.reddit.com/"
 
 _GUIDANCE = """\
-Go straight to the subreddits the description names (https://www.reddit.com/r/<name>/top/?t=day)
-rather than the algorithmic home feed. Skip promoted posts. For each post give its title,
-subreddit, link and a one-line summary; read comments only if the description asks for them."""
+Read the logged-in home feed (the user's subscribed subreddits) in the order shown and take at
+most the first 25 posts; do not page further. Skip promoted and stickied posts. Return
+{"posts": [...]} where each post has title, url (its comments permalink), subreddit (r/name),
+author, posted_at, a one-line summary, and text (the post's own words if the page shows them).
+Leave out vote and comment counts. Read comments only if the description asks for them."""
 
 
 def browse(description: str) -> dict:

@@ -1,7 +1,8 @@
-"""Command-line entry point: `login`, `run` and `render`.
+"""Command-line entry point: `login`, `run`, `render` and `import-reddit`.
 
 A run writes `<output_dir>/<timestamp>/digest.json` and `digest.html`; `render`
-rebuilds the HTML from a saved JSON record without touching the browser.
+rebuilds the HTML from a saved JSON record without touching the browser, and
+`import-reddit` builds a run from a saved old.reddit.com/.json instead.
 """
 
 import json
@@ -14,6 +15,7 @@ from loguru import logger
 from scrollforme.render import render_digest
 from scrollforme.site_modules import load_browse
 from scrollforme.browser import open_profile_for_login
+from scrollforme.reddit_json import IMPORT_DESCRIPTION, posts_from_listing
 from scrollforme.models import SourceResult, result_from_dict, result_to_dict
 from scrollforme.config import DEFAULT_CONFIG_PATH, Settings, Source, load_settings, use_settings
 
@@ -37,6 +39,13 @@ def _build_parser() -> argparse.ArgumentParser:
 	render = commands.add_parser("render", help="rebuild HTML from a saved digest.json")
 	render.add_argument("digest_json", type=Path)
 	render.set_defaults(handler=_render)
+	imports = commands.add_parser(
+		"import-reddit", help="build a digest from a saved old.reddit.com/.json"
+	)
+	imports.add_argument("listing_json", type=Path)
+	imports.add_argument("--max-items", type=int, default=25)
+	imports.add_argument("--output-dir", type=Path, default=Path("output"))
+	imports.set_defaults(handler=_import_reddit)
 	return parser
 
 
@@ -72,15 +81,26 @@ def _write_run(run_dir: Path, results: list[SourceResult], started_at: datetime)
 		"generated_at": started_at.isoformat(),
 		"results": [result_to_dict(result) for result in results],
 	}
-	(run_dir / "digest.json").write_text(json.dumps(record, indent="\t", ensure_ascii=False))
+	record_json = json.dumps(record, indent="\t", ensure_ascii=False)
+	(run_dir / "digest.json").write_text(record_json, encoding="utf-8")
 	html_path = run_dir / "digest.html"
-	html_path.write_text(render_digest(results, started_at))
+	html_path.write_text(render_digest(results, started_at), encoding="utf-8")
 	return html_path
 
 
 def _render(args: argparse.Namespace) -> None:
-	record = json.loads(args.digest_json.read_text())
+	record = json.loads(args.digest_json.read_text(encoding="utf-8"))
 	results = [result_from_dict(data) for data in record["results"]]
 	html_path = args.digest_json.with_suffix(".html")
-	html_path.write_text(render_digest(results, datetime.fromisoformat(record["generated_at"])))
+	generated_at = datetime.fromisoformat(record["generated_at"])
+	html_path.write_text(render_digest(results, generated_at), encoding="utf-8")
 	logger.info("Digest written to {}", html_path)
+
+
+def _import_reddit(args: argparse.Namespace) -> None:
+	listing = json.loads(args.listing_json.read_text(encoding="utf-8"))
+	data = posts_from_listing(listing, args.max_items)
+	result = SourceResult("reddit.com", IMPORT_DESCRIPTION, data=data)
+	started_at = datetime.now()
+	run_dir = args.output_dir / started_at.strftime("%Y-%m-%d_%H%M%S")
+	logger.info("Digest written to {}", _write_run(run_dir, [result], started_at))

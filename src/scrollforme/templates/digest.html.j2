@@ -1,8 +1,9 @@
 {%- macro show(value) -%}
 {%- if value is mapping -%}
 	{%- set title, url, rest = value | split_headline -%}
-	{%- if url %}<p class="headline"><a href="{{ url }}" rel="noreferrer">{{ title }}</a></p>{% endif -%}
+	{%- if url %}<article class="post" data-url="{{ url }}"><p class="headline"><a href="{{ url }}" rel="noreferrer">{{ title }}</a></p>{% endif -%}
 	{%- if rest %}<dl>{% for key, item in rest.items() %}<dt>{{ key | replace("_", " ") }}</dt><dd>{{ show(item) }}</dd>{% endfor %}</dl>{% endif -%}
+	{%- if url %}</article>{% endif -%}
 {%- elif value is string -%}
 	{%- if value is link %}<a href="{{ value }}" rel="noreferrer">{{ value }}</a>{% else %}{{ value }}{% endif -%}
 {%- elif value is iterable -%}

@@ -44,7 +44,7 @@ def test_server_starts_with_unused_sections_disabled():
 def test_prompt_carries_profile_site_and_purpose():
 	task = SiteTask("reddit.com", "https://www.reddit.com/", "new open models", "skip promos")
 	prompt = build_prompt(task, SETTINGS)
-	assert str(SETTINGS.browser.profile_dir) in prompt
+	assert repr(SETTINGS.browser.profile_dir.as_posix()) in prompt
 	assert "stay on reddit.com" in prompt
 	assert "new open models" in prompt
 	assert "skip promos" in prompt

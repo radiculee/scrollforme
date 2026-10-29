@@ -1,0 +1,74 @@
+{
+	"kind": "Listing",
+	"data": {
+		"children": [
+			{
+				"kind": "t3",
+				"data": {
+					"title": "Moderator note: weekly thread",
+					"permalink": "/r/LocalLLaMA/comments/aaa001/weekly_thread/",
+					"author": "AutoModerator",
+					"subreddit_name_prefixed": "r/LocalLLaMA",
+					"selftext": "Post your questions here.",
+					"is_self": true,
+					"domain": "self.LocalLLaMA",
+					"stickied": true,
+					"created_utc": 1793260800
+				}
+			},
+			{
+				"kind": "t3",
+				"data": {
+					"title": "Running a 70B model on two used GPUs &amp; what I learned",
+					"permalink": "/r/LocalLLaMA/comments/aaa002/running_a_70b_model/",
+					"author": "gpu_tinkerer",
+					"subreddit_name_prefixed": "r/LocalLLaMA",
+					"selftext": "I split the layers across both cards. Throughput was better than I expected.\n\nDetails below.",
+					"is_self": true,
+					"domain": "self.LocalLLaMA",
+					"created_utc": 1793264400
+				}
+			},
+			{
+				"kind": "t3",
+				"data": {
+					"title": "City council approves new bike lanes downtown",
+					"permalink": "/r/bikecommuting/comments/aaa003/bike_lanes/",
+					"author": "pedal_pusher",
+					"subreddit_name_prefixed": "r/bikecommuting",
+					"selftext": "",
+					"is_self": false,
+					"domain": "citynews.example.com",
+					"created_utc": 1793268000
+				}
+			},
+			{
+				"kind": "t3",
+				"data": {
+					"title": "Promoted: try our app",
+					"permalink": "/r/ads/comments/aaa004/promoted/",
+					"author": "brand_account",
+					"subreddit_name_prefixed": "r/ads",
+					"selftext": "",
+					"is_self": false,
+					"domain": "ads.example.com",
+					"promoted": true,
+					"created_utc": 1793271600
+				}
+			},
+			{
+				"kind": "t3",
+				"data": {
+					"title": "What's a book that changed how you think?",
+					"permalink": "/r/books/comments/aaa005/book_changed_thinking/",
+					"author": "page_turner",
+					"subreddit_name_prefixed": "r/books",
+					"selftext": "",
+					"is_self": true,
+					"domain": "self.books",
+					"created_utc": 1793275200
+				}
+			}
+		]
+	}
+}
